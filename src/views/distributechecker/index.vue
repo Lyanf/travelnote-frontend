@@ -102,23 +102,27 @@ export default {
       })
     },
     confirmEdit(row) {
+      const that = this
       distributeChecker({
         'articleid': row.id,
         'checkerid': row.checkerid,
         'complete': 0,
         'content': '尚未审核'
-      })
-      changeArticleStatus(row.id, {
-        'id': row.id,
-        'header': row.header,
-        'content': row.content,
-        'date': row.date,
-        'status': 1,
-        'userid': row.userid
-      })
-      this.$message({
-        message: '审稿人分配成功',
-        type: 'success'
+      }).then(response => {
+        changeArticleStatus(row.id, {
+          'id': row.id,
+          'header': row.header,
+          'content': row.content,
+          'date': row.date,
+          'status': 1,
+          'userid': row.userid
+        }).then(response => {
+          that.getList()
+          that.$message({
+            message: '审稿人分配成功',
+            type: 'success'
+          })
+        })
       })
     }
   }

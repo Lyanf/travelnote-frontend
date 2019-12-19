@@ -21,7 +21,7 @@ export default {
   },
   methods: {
     async getList() {
-      const { data } = await fetchArticle(1576728315807)
+      const { data } = await fetchArticle(1576744572006)
       console.log(data)
       document.getElementById('note').innerHTML = data['content']
     }

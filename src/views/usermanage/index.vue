@@ -60,7 +60,7 @@
 </template>
 
 <script lang="js">
-import { fetchAllUser } from '@/api/newtest'
+import { fetchAllUser, updateUser } from '@/api/newtest'
 
 export default {
   filters: {
@@ -103,19 +103,17 @@ export default {
       console.log(this.list)
       this.listLoading = false
     },
-    cancelEdit(row) {
-      row.title = row.originalTitle
-      row.edit = false
-      this.$message({
-        message: 'The title has been restored to the original value',
-        type: 'warning'
-      })
-    },
     confirmEdit(row) {
       row.edit = false
       // row.originalTitle = row.title
+      updateUser(row.id, {
+        'id': row.id,
+        'password': row.password,
+        'name': row.name,
+        'permission': row.permission
+      })
       this.$message({
-        message: 'The title has been edited',
+        message: '修改成功！',
         type: 'success'
       })
       console.log(this.list)

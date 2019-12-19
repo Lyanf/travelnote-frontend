@@ -81,3 +81,33 @@ export function fetchAllArticle() {
     method: 'get'
   })
 }
+
+export function updateUser(userid, query) {
+  return request({
+    url: '/User/' + userid.toString(),
+    method: 'put',
+    data: query
+  })
+}
+
+export function fetchAllCheck(checkerid = null) {
+  if (checkerid === null) {
+    return request({
+      url: '/check',
+      method: 'get'
+    })
+  } else {
+    return request({
+      url: '/check?Check.checkerid=' + checkerid.toString(),
+      method: 'get'
+    })
+  }
+}
+
+export function updateCheck(checkid,query) {
+  return request({
+    url: '/Check/' + checkid.toString(),
+    method: 'put',
+    data: query
+  })
+}

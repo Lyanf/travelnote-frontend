@@ -1,0 +1,4 @@
+.el-message-box{
+  overflow: auto;
+  max-height: 700px;
+}

@@ -112,51 +112,51 @@ export const constantRoutes = [
       component: () => import('@/views/dataexport/index'),
       meta: { title: '数据归档', icon: 'dashboard' }
     }]
-  },
-  {
-    path: '/',
-    component: Layout,
-    redirect: '/dashboard',
-    children: [{
-      path: 'editarticle',
-      name: '发表游记',
-      component: () => import('@/views/editarticle/index'),
-      meta: { title: '发表游记', icon: 'dashboard' }
-    }]
-  },
-  {
-    path: '/',
-    component: Layout,
-    redirect: '/dashboard',
-    children: [{
-      path: 'noteshow',
-      name: '游记首页',
-      component: () => import('@/views/dashboard/index'),
-      meta: { title: '游记首页', icon: 'dashboard' }
-    }]
-  },
-  {
-    path: '/',
-    component: Layout,
-    redirect: '/dashboard',
-    children: [{
-      path: 'noteshow',
-      name: '个人中心',
-      component: () => import('@/views/dashboard/index'),
-      meta: { title: '个人中心', icon: 'dashboard' }
-    }]
-  },
-  {
-    path: '/',
-    component: Layout,
-    redirect: '/dashboard',
-    children: [{
-      path: 'noteshow2',
-      name: 'noteshow',
-      component: () => import('@/views/noteshow/index'),
-      meta: { title: 'noteshow2', icon: 'dashboard' }
-    }]
   }
+  // {
+  //   path: '/',
+  //   component: Layout,
+  //   redirect: '/dashboard',
+  //   children: [{
+  //     path: 'editarticle',
+  //     name: '发表游记',
+  //     component: () => import('@/views/editarticle/index'),
+  //     meta: { title: '发表游记', icon: 'dashboard' }
+  //   }]
+  // },
+  // {
+  //   path: '/',
+  //   component: Layout,
+  //   redirect: '/dashboard',
+  //   children: [{
+  //     path: 'noteshow',
+  //     name: '游记首页',
+  //     component: () => import('@/views/dashboard/index'),
+  //     meta: { title: '游记首页', icon: 'dashboard' }
+  //   }]
+  // },
+  // {
+  //   path: '/',
+  //   component: Layout,
+  //   redirect: '/dashboard',
+  //   children: [{
+  //     path: 'noteshow',
+  //     name: '个人中心',
+  //     component: () => import('@/views/dashboard/index'),
+  //     meta: { title: '个人中心', icon: 'dashboard' }
+  //   }]
+  // },
+  // {
+  //   path: '/',
+  //   component: Layout,
+  //   redirect: '/dashboard',
+  //   children: [{
+  //     path: 'noteshow2',
+  //     name: 'noteshow',
+  //     component: () => import('@/views/noteshow/index'),
+  //     meta: { title: 'noteshow2', icon: 'dashboard' }
+  //   }]
+  // }
   // 404 page must be placed at the end !!!
   // { path: '*', redirect: '/404', hidden: true }
 ]

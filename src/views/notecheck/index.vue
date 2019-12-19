@@ -1,47 +1,40 @@
 <template>
   <div class="app-container">
     <el-table v-loading="listLoading" :data="list" border fit highlight-current-row style="width: 100%">
-      <el-table-column align="center" label="稿件ID" width="200">
+      <el-table-column align="center" label="审核ID" width="200">
         <template slot-scope="{row}">
           <span>{{ row.id }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column width="200" align="center" label="稿件标题">
+      <el-table-column width="200" align="center" label="稿件ID">
         <template slot-scope="{row}">
-          <span>{{ row.header }}</span>
+          <span style="cursor: pointer; text-decoration: underline; color: #20a0ff" @click="showNote(row.articleid)">{{ row.articleid }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column width="200" align="center" label="作者ID">
-        <template slot-scope="{row}">
-          <span>{{ row.userid }}</span>
+      <el-table-column width="400" align="center" label="审核意见">
+        <template slot-scope="{ row }">
+          <el-input v-model="row.checkerinput" />
         </template>
       </el-table-column>
-
-      <el-table-column width="200" align="center" label="文章状态">
-        <template slot-scope="{row}">
-          <span>{{ row.status }}</span>
-        </template>
-      </el-table-column>
-
       <el-table-column align="center" label="Actions">
         <template slot-scope="{row}">
           <el-button
             type="success"
             size="small"
             icon="el-icon-circle-check-outline"
-            @click="confirmDelete(row)"
+            @click="pass(row)"
           >
-            删除
+            通过
           </el-button>
           <el-button
             type="primary"
             size="small"
             icon="el-icon-edit"
-            @click="confirmTop(row)"
+            @click="unpass(row)"
           >
-            置顶
+            不通过
           </el-button>
         </template>
       </el-table-column>
@@ -51,8 +44,9 @@
 
 <script>
 import { fetchAllArticle } from '@/api/newtest.js'
-import { changeArticleStatus, deleteArticle } from '@/api/newtest'
-
+import { changeArticleStatus, deleteArticle, fetchAllCheck, fetchArticle, updateCheck } from '@/api/newtest'
+import { updateArticle } from '@/api/article'
+import '@/styles/test.css'
 export default {
   filters: {
     statusFilter(status) {
@@ -78,41 +72,82 @@ export default {
     this.getList()
   },
   methods: {
+    async showNote(articleid) {
+      let article = await fetchArticle(articleid)
+      article = article['data']
+      this.$alert(article.content, '文章内容', {
+        dangerouslyUseHTMLString: true
+      })
+    },
     async getList() {
       this.listLoading = true
-      // TODO:应该变成已经通过审核的文章
-      const { data } = await fetchAllArticle()
-      this.list = data['Article']
+      const { data } = await fetchAllCheck()
+      this.list = data['Check']
+      this.list = this.list.map(v => {
+        this.$set(v, 'checkerinput', '') // https://vuejs.org/v2/guide/reactivity.html
+        return v
+      })
+      this.list = this.list.map(v => {
+        if (v.complete.toString() === '1') {
+          return null
+        } else {
+          return v
+        }
+      })
+      const temp = []
+      for (const i of this.list) {
+        if (i != null) { temp.push(i) }
+      }
+      // this.list.remove(null)
+      this.list = temp
       this.listLoading = false
     },
-    cancelEdit(row) {
-      row.title = row.originalTitle
-      row.edit = false
-      this.$message({
-        message: 'The title has been restored to the original value',
-        type: 'warning'
-      })
-    },
-    confirmDelete(row) {
-      deleteArticle(row.id)
-      this.$message({
-        message: '文章已经被删除',
-        type: 'success'
-      })
-    },
-    confirmTop(row) {
-      changeArticleStatus(row.id, {
+    async pass(row) {
+      // 不仅要把check的complete标为1，还要把文                                                                                                                                     章的status改一下
+      const that = this
+      updateCheck(row.id, {
         'id': row.id,
-        'header': row.header,
-        'content': row.content,
-        'date': row.date,
-        'status': 4,
-        'userid': row.userid
+        'articleid': row.articleid,
+        'checkerid': row.checkerid,
+        'content': row.checkerinput,
+        'complete': 1
+      }).then(response => {
+        fetchArticle(row.articleid).then(article => {
+          article = article['data']
+          article.status = 3
+          console.log(article)
+          changeArticleStatus(article.id, article).then(response => {
+            that.$message({
+              message: '文章已经通过',
+              type: 'success'
+            })
+            that.getList()
+          })
+        })
       })
+    },
+    async unpass(row) {
+      // let that = this
+      await updateCheck(row.id, {
+        'id': row.id,
+        'articleid': row.articleid,
+        'checkerid': row.checkerid,
+        'content': row.content,
+        'complete': 1
+      })
+      let article = await fetchArticle(row.articleid)
+      article = article['data']
+      article.status = 2
+      await changeArticleStatus(article.id, article)
       this.$message({
-        message: '文章已经被置顶',
+        message: '文章已经通过',
         type: 'success'
       })
+      this.$message({
+        message: '文章未被通过',
+        type: 'success'
+      })
+      this.getList()
     }
   }
 }

@@ -85,24 +85,18 @@ export default {
       this.list = data['Article']
       this.listLoading = false
     },
-    cancelEdit(row) {
-      row.title = row.originalTitle
-      row.edit = false
-      this.$message({
-        message: 'The title has been restored to the original value',
-        type: 'warning'
+    async confirmDelete(row) {
+      const that = this
+      await deleteArticle(row.id).then(response =>{
+        that.getList()
+        that.$message({
+          message: '文章已经被删除',
+          type: 'success'
+        })
       })
     },
-    confirmDelete(row) {
-      deleteArticle(row.id)
-      this.$message({
-        message: '文章已经被删除',
-        type: 'success'
-      })
-      location.reload()
-    },
-    confirmTop(row) {
-      changeArticleStatus(row.id, {
+    async confirmTop(row) {
+      await changeArticleStatus(row.id, {
         'id': row.id,
         'header': row.header,
         'content': row.content,
@@ -114,7 +108,7 @@ export default {
         message: '文章已经被置顶',
         type: 'success'
       })
-      location.reload()
+      this.getList()
     }
   }
 }
