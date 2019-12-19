@@ -31,6 +31,17 @@ import Layout from '@/layout'
  * all roles can be accessed
  */
 export const constantRoutes = [
+  // {
+  //   path: '/dashboard',
+  //   component: layout,
+  //   children: [{
+  //     path: 'usermanage',
+  //     name: '用户管理',
+  //     component: () => import('@/views/usermanage/index'),
+  //     meta: { title: '用户管理', icon: 'dashboard' }
+  //   }],
+  //   hidden: true
+  // },
   {
     path: '/login',
     component: () => import('@/views/login/index'),
@@ -42,125 +53,112 @@ export const constantRoutes = [
     component: () => import('@/views/404'),
     hidden: true
   },
-
+  {
+    path: '',
+    // component: Layout,
+    redirect: '/usermanage'
+  },
   {
     path: '/',
     component: Layout,
     redirect: '/dashboard',
     children: [{
-      path: 'dashboard',
-      name: 'Dashboard',
-      component: () => import('@/views/dashboard/index'),
-      meta: { title: 'Dashboard', icon: 'dashboard' }
+      path: 'usermanage',
+      name: '用户管理',
+      component: () => import('@/views/usermanage/index'),
+      meta: { title: '用户管理', icon: 'dashboard' }
     }]
   },
-
   {
-    path: '/example',
+    path: '/',
     component: Layout,
-    redirect: '/example/table',
-    name: 'Example',
-    meta: { title: 'Example', icon: 'example' },
-    children: [
-      {
-        path: 'table',
-        name: 'Table',
-        component: () => import('@/views/table/index'),
-        meta: { title: 'Table', icon: 'table' }
-      },
-      {
-        path: 'tree',
-        name: 'Tree',
-        component: () => import('@/views/tree/index'),
-        meta: { title: 'Tree', icon: 'tree' }
-      }
-    ]
+    redirect: '/dashboard',
+    children: [{
+      path: 'distributechecker',
+      name: '审稿分配',
+      component: () => import('@/views/distributechecker/index'),
+      meta: { title: '审稿分配', icon: 'dashboard' }
+    }]
   },
-
   {
-    path: '/form',
+    path: '/',
     component: Layout,
-    children: [
-      {
-        path: 'index',
-        name: 'Form',
-        component: () => import('@/views/form/index'),
-        meta: { title: 'Form', icon: 'form' }
-      }
-    ]
+    redirect: '/notemanage',
+    children: [{
+      path: 'notemanage',
+      name: '稿件管理',
+      component: () => import('@/views/notemanage/index'),
+      meta: { title: '稿件管理', icon: 'dashboard' }
+    }]
   },
-
   {
-    path: '/nested',
+    path: '/',
     component: Layout,
-    redirect: '/nested/menu1',
-    name: 'Nested',
-    meta: {
-      title: 'Nested',
-      icon: 'nested'
-    },
-    children: [
-      {
-        path: 'menu1',
-        component: () => import('@/views/nested/menu1/index'), // Parent router-view
-        name: 'Menu1',
-        meta: { title: 'Menu1' },
-        children: [
-          {
-            path: 'menu1-1',
-            component: () => import('@/views/nested/menu1/menu1-1'),
-            name: 'Menu1-1',
-            meta: { title: 'Menu1-1' }
-          },
-          {
-            path: 'menu1-2',
-            component: () => import('@/views/nested/menu1/menu1-2'),
-            name: 'Menu1-2',
-            meta: { title: 'Menu1-2' },
-            children: [
-              {
-                path: 'menu1-2-1',
-                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-1'),
-                name: 'Menu1-2-1',
-                meta: { title: 'Menu1-2-1' }
-              },
-              {
-                path: 'menu1-2-2',
-                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-2'),
-                name: 'Menu1-2-2',
-                meta: { title: 'Menu1-2-2' }
-              }
-            ]
-          },
-          {
-            path: 'menu1-3',
-            component: () => import('@/views/nested/menu1/menu1-3'),
-            name: 'Menu1-3',
-            meta: { title: 'Menu1-3' }
-          }
-        ]
-      },
-      {
-        path: 'menu2',
-        component: () => import('@/views/nested/menu2/index'),
-        meta: { title: 'menu2' }
-      }
-    ]
+    redirect: '/notecheck',
+    children: [{
+      path: 'notecheck',
+      name: '审核稿件',
+      component: () => import('@/views/notecheck/index'),
+      meta: { title: '审核稿件', icon: 'dashboard' }
+    }]
   },
-
   {
-    path: 'external-link',
+    path: '/',
     component: Layout,
-    children: [
-      {
-        path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
-        meta: { title: 'External Link', icon: 'link' }
-      }
-    ]
+    redirect: '/dashboard',
+    children: [{
+      path: 'dataexport',
+      name: '数据归档',
+      component: () => import('@/views/dataexport/index'),
+      meta: { title: '数据归档', icon: 'dashboard' }
+    }]
   },
-
+  {
+    path: '/',
+    component: Layout,
+    redirect: '/dashboard',
+    children: [{
+      path: 'editarticle',
+      name: '发表游记',
+      component: () => import('@/views/editarticle/index'),
+      meta: { title: '发表游记', icon: 'dashboard' }
+    }]
+  },
+  {
+    path: '/',
+    component: Layout,
+    redirect: '/dashboard',
+    children: [{
+      path: 'noteshow',
+      name: '游记首页',
+      component: () => import('@/views/dashboard/index'),
+      meta: { title: '游记首页', icon: 'dashboard' }
+    }]
+  },
+  {
+    path: '/',
+    component: Layout,
+    redirect: '/dashboard',
+    children: [{
+      path: 'noteshow',
+      name: '个人中心',
+      component: () => import('@/views/dashboard/index'),
+      meta: { title: '个人中心', icon: 'dashboard' }
+    }]
+  },
+  {
+    path: '/',
+    component: Layout,
+    redirect: '/dashboard',
+    children: [{
+      path: 'noteshow2',
+      name: 'noteshow',
+      component: () => import('@/views/noteshow/index'),
+      meta: { title: 'noteshow2', icon: 'dashboard' }
+    }]
+  }
   // 404 page must be placed at the end !!!
-  { path: '*', redirect: '/404', hidden: true }
+  // { path: '*', redirect: '/404', hidden: true }
 ]
 
 const createRouter = () => new Router({
