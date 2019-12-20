@@ -40,7 +40,7 @@
 
         <el-table-column width="200" align="center" label="文章状态">
           <template slot-scope="{row}">
-            <span>{{ row.status }}</span>
+            <span>{{ row.statuslabel }}</span>
           </template>
         </el-table-column>
       </el-table>
@@ -137,6 +137,14 @@ export default {
       this.listLoading = false
       this.list = this.list.map(v => {
         this.$set(v, 'select', false) // https://vuejs.org/v2/guide/reactivity.html
+        this.$set(v, 'statuslabel', (function() {
+          const t = { '0': '已提交',
+            '1': '未审核',
+            '2': '审核未通过',
+            '3': '审核已通过',
+            '4': '置顶' }
+          return t[v['status']]
+        })())
         return v
       })
     }
