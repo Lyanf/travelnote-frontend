@@ -1,69 +1,70 @@
 <template>
   <div class="app-container">
-    <el-table v-loading="listLoading" :data="list" border fit highlight-current-row style="width: 100%">
-      <el-table-column align="center" label="稿件ID" width="200">
-        <template slot-scope="{row}">
-          <span>{{ row.id }}</span>
-        </template>
-      </el-table-column>
+    <ArticleSearch @searchEvent="filter" />
+    <div style="margin-top: 20px">
+      <el-table v-loading="listLoading" :data="list" border fit highlight-current-row style="width: 100%">
+        <el-table-column align="center" label="稿件ID" width="200">
+          <template slot-scope="{row}">
+            <span>{{ row.id }}</span>
+          </template>
+        </el-table-column>
 
-      <el-table-column width="200" align="center" label="稿件标题">
-        <template slot-scope="{row}">
-          <span>{{ row.header }}</span>
-        </template>
-      </el-table-column>
+        <el-table-column width="200" align="center" label="稿件标题">
+          <template slot-scope="{row}">
+            <span>{{ row.header }}</span>
+          </template>
+        </el-table-column>
 
-      <el-table-column width="200" align="center" label="作者ID">
-        <template slot-scope="{row}">
-          <span>{{ row.userid }}</span>
-        </template>
-      </el-table-column>
+        <el-table-column width="200" align="center" label="作者ID">
+          <template slot-scope="{row}">
+            <span>{{ row.userid }}</span>
+          </template>
+        </el-table-column>
 
-      <el-table-column width="200" align="center" label="文章状态">
-        <template slot-scope="{row}">
-          <span>{{ row.statuslabel }}</span>
-        </template>
-      </el-table-column>
+        <el-table-column width="200" align="center" label="创建时间">
+          <template slot-scope="{row}">
+            <span>{{ row.date }}</span>
+          </template>
+        </el-table-column>
 
-      <el-table-column align="center" label="Actions">
-        <template slot-scope="{row}">
-          <el-button
-            type="success"
-            size="small"
-            icon="el-icon-circle-check-outline"
-            @click="confirmDelete(row)"
-          >
-            删除
-          </el-button>
-          <el-button
-            type="primary"
-            size="small"
-            icon="el-icon-edit"
-            @click="confirmTop(row)"
-          >
-            置顶
-          </el-button>
-        </template>
-      </el-table-column>
-    </el-table>
+        <el-table-column width="200" align="center" label="文章状态">
+          <template slot-scope="{row}">
+            <span>{{ row.statuslabel }}</span>
+          </template>
+        </el-table-column>
+
+        <el-table-column align="center" label="Actions">
+          <template slot-scope="{row}">
+            <el-button
+              type="success"
+              size="small"
+              icon="el-icon-circle-check-outline"
+              @click="confirmDelete(row)"
+            >
+              删除
+            </el-button>
+            <el-button
+              type="primary"
+              size="small"
+              icon="el-icon-edit"
+              @click="confirmTop(row)"
+            >
+              置顶
+            </el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+    </div>
   </div>
 </template>
 
 <script>
 import { fetchAllArticle } from '@/api/newtest.js'
 import { changeArticleStatus, deleteArticle } from '@/api/newtest'
+import ArticleSearch from '@/components/ArticleSearch/index'
 
 export default {
-  filters: {
-    statusFilter(status) {
-      const statusMap = {
-        published: 'success',
-        draft: 'info',
-        deleted: 'danger'
-      }
-      return statusMap[status]
-    }
-  },
+  components: { ArticleSearch },
   data() {
     return {
       list: null,
@@ -78,6 +79,46 @@ export default {
     this.getList()
   },
   methods: {
+    async filter(filterObj) {
+      await this.getList()
+      console.log(filterObj)
+      if (filterObj.hasOwnProperty('header')) {
+        this.list = this.list.map(v => {
+          if ((v['header'].search(filterObj['header'])) !== -1) {
+            console.log('++++++')
+            return v
+          } else {
+            return 1
+          }
+        })
+      }
+      if (filterObj.hasOwnProperty('name')) {
+        this.list = this.list.map(v => {
+          if (v['name'].search(filterObj['name']) !== -1) {
+            return v
+          } else {
+            return 1
+          }
+        })
+      }
+      if (filterObj.hasOwnProperty('date')) {
+        this.list = this.list.map(v => {
+          if (filterObj['date'][0] <= v['date'] && filterObj['date'][1] >= v['date']) {
+            return v
+          } else {
+            return 1
+          }
+        })
+      }
+      const t = []
+      for (const item of this.list) {
+        if (item !== 1) {
+          t.push(item)
+        }
+      }
+      this.list = t
+      console.log(this.list)
+    },
     async getList() {
       this.listLoading = true
       // TODO:应该变成已经通过审核的文章
