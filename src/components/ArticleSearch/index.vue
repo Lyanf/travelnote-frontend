@@ -21,7 +21,9 @@
       </el-col>
       <el-col span="4">
         <el-button type="primary" @click="searchClicked">检索</el-button>
+        <el-button type="primary" @click="$emit('exportEvent')">导出</el-button>
       </el-col>
+      <el-col span="4" />
     </el-row>
   </el-card>
 </template>
@@ -43,16 +45,19 @@ export default {
       t['header'] = this.header
       t['name'] = this.name
       t['date'] = this.date
+      console.log(typeof t['date'])
+      console.log(t['date'])
       for (const i in t) {
-        if (t[i] !== '' && t[i] !== null) {
+        if (t[i] !== '' && t[i] != null) {
           obj[i] = t[i]
         }
       }
-      if (t.hasOwnProperty('date')) {
+      if (obj.hasOwnProperty('date')) {
         const date1 = dateFormat(t['date'][0], 'yyyy,mm,dd')
         const date2 = dateFormat(t['date'][1], 'yyyy,mm,dd')
-        t['date'][0] = date1
-        t['date'][1] = date2
+        // t['date'] = [1, 2]
+        obj['date'][0] = date1
+        obj['date'][1] = date2
       }
       this.$emit('searchEvent', obj)
     }

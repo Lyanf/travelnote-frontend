@@ -87,7 +87,7 @@ export default {
     },
     async confirmDelete(row) {
       const that = this
-      await deleteArticle(row.id).then(response =>{
+      await deleteArticle(row.id).then(response => {
         that.getList()
         that.$message({
           message: '文章已经被删除',
