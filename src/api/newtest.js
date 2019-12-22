@@ -104,7 +104,7 @@ export function fetchAllCheck(checkerid = null) {
   }
 }
 
-export function updateCheck(checkid,query) {
+export function updateCheck(checkid, query) {
   return request({
     url: '/Check/' + checkid.toString(),
     method: 'put',

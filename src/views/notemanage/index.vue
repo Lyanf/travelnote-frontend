@@ -21,6 +21,12 @@
           </template>
         </el-table-column>
 
+        <el-table-column width="200" align="center" label="作者名称">
+          <template slot-scope="{row}">
+            <span>{{ row.name }}</span>
+          </template>
+        </el-table-column>
+
         <el-table-column width="200" align="center" label="创建时间">
           <template slot-scope="{row}">
             <span>{{ row.date }}</span>
@@ -94,6 +100,7 @@ export default {
       }
       if (filterObj.hasOwnProperty('name')) {
         this.list = this.list.map(v => {
+          if (v === 1) return 1
           if (v['name'].search(filterObj['name']) !== -1) {
             return v
           } else {
@@ -103,6 +110,7 @@ export default {
       }
       if (filterObj.hasOwnProperty('date')) {
         this.list = this.list.map(v => {
+          if (v === 1) return 1
           if (filterObj['date'][0] <= v['date'] && filterObj['date'][1] >= v['date']) {
             return v
           } else {

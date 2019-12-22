@@ -53,6 +53,7 @@ import ArticleSearch from '@/components/ArticleSearch/index'
 import { fetchAllArticle } from '@/api/newtest'
 import JSZip from 'jszip'
 import FileSaver from 'file-saver'
+
 export default {
   name: 'Index',
   components: { ArticleSearch },
@@ -88,6 +89,9 @@ export default {
       }
       if (filterObj.hasOwnProperty('name')) {
         this.list = this.list.map(v => {
+          if (v === 1) {
+            return 1
+          }
           if (v['name'].search(filterObj['name']) !== -1) {
             return v
           } else {
@@ -97,6 +101,9 @@ export default {
       }
       if (filterObj.hasOwnProperty('date')) {
         this.list = this.list.map(v => {
+          if (v === 1) {
+            return 1
+          }
           if (filterObj['date'][0] <= v['date'] && filterObj['date'][1] >= v['date']) {
             return v
           } else {
@@ -138,11 +145,13 @@ export default {
       this.list = this.list.map(v => {
         this.$set(v, 'select', false) // https://vuejs.org/v2/guide/reactivity.html
         this.$set(v, 'statuslabel', (function() {
-          const t = { '0': '已提交',
+          const t = {
+            '0': '已提交',
             '1': '未审核',
             '2': '审核未通过',
             '3': '审核已通过',
-            '4': '置顶' }
+            '4': '置顶'
+          }
           return t[v['status']]
         })())
         return v
@@ -153,9 +162,9 @@ export default {
 </script>
 
 <style scoped>
-/*.el-card{*/
-/*  margin-left: 50px;*/
-/*  margin-right: 50px;*/
-/*  margin-top: 30px;*/
-/*}*/
+  /*.el-card{*/
+  /*  margin-left: 50px;*/
+  /*  margin-right: 50px;*/
+  /*  margin-top: 30px;*/
+  /*}*/
 </style>
