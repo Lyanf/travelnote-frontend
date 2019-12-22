@@ -56,7 +56,20 @@ export const constantRoutes = [
   {
     path: '',
     // component: Layout,
-    redirect: '/usermanage'
+    redirect: '/initpage'
+  },
+  {
+    path: '/',
+    component: Layout,
+    redirect: '/dashboard',
+    children: [
+      {
+        path: 'initpage',
+        name: '控制面板',
+        component: () => import('@/views/initpage/dashboard/admin/index'),
+        meta: { title: '控制面板', icon: 'dashboard' }
+      }
+    ]
   },
   {
     path: '/',
@@ -95,6 +108,7 @@ export const constantRoutes = [
     path: '/',
     component: Layout,
     redirect: '/notecheck',
+    hidden: true,
     children: [{
       path: 'notecheck',
       name: '审核稿件',

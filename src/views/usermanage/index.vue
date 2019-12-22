@@ -51,7 +51,15 @@
             icon="el-icon-edit"
             @click="row.edit=!row.edit"
           >
-            Edit
+            编辑
+          </el-button>
+          <el-button
+            type="warning"
+            size="small"
+            icon="el-icon-edit"
+            @click="deleteUser(row)"
+          >
+            删除
           </el-button>
         </template>
       </el-table-column>
@@ -60,7 +68,7 @@
 </template>
 
 <script lang="js">
-import { fetchAllUser, updateUser } from '@/api/newtest'
+import { deleteUser, fetchAllUser, updateUser } from '@/api/newtest'
 
 export default {
   filters: {
@@ -87,6 +95,10 @@ export default {
     this.getList()
   },
   methods: {
+    async deleteUser(row) {
+      await deleteUser(row.id)
+      this.getList()
+    },
     async getList() {
       console.log('现在开始')
       this.listLoading = true

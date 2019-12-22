@@ -111,3 +111,10 @@ export function updateCheck(checkid, query) {
     data: query
   })
 }
+
+export function deleteUser(userid) {
+  return request({
+    url: '/User/'+userid.toString(),
+    method: 'delete'
+  })
+}
