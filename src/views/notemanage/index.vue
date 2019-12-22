@@ -5,7 +5,8 @@
       <el-table v-loading="listLoading" :data="list" border fit highlight-current-row style="width: 100%">
         <el-table-column align="center" label="稿件ID" width="200">
           <template slot-scope="{row}">
-            <span>{{ row.id }}</span>
+<!--            <span>{{ row.id }}</span>-->
+            <span style="cursor: pointer; text-decoration: underline; color: #20a0ff" @click="showNote(row.id)">{{ row.id }}</span>
           </template>
         </el-table-column>
 
@@ -66,7 +67,7 @@
 
 <script>
 import { fetchAllArticle } from '@/api/newtest.js'
-import { changeArticleStatus, deleteArticle } from '@/api/newtest'
+import { changeArticleStatus, deleteArticle, fetchArticle } from '@/api/newtest'
 import ArticleSearch from '@/components/ArticleSearch/index'
 
 export default {
@@ -85,6 +86,13 @@ export default {
     this.getList()
   },
   methods: {
+    async showNote(articleid) {
+      let article = await fetchArticle(articleid)
+      article = article['data']
+      this.$alert(article.content, '文章内容', {
+        dangerouslyUseHTMLString: true
+      })
+    },
     async filter(filterObj) {
       await this.getList()
       console.log(filterObj)
