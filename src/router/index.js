@@ -54,44 +54,6 @@ export const constantRoutes = [
     hidden: true
   },
   {
-    path: '',
-    // component: Layout,
-    redirect: '/usermanage'
-  },
-  {
-    path: '/',
-    component: Layout,
-    redirect: '/dashboard',
-    children: [{
-      path: 'usermanage',
-      name: '用户管理',
-      component: () => import('@/views/usermanage/index'),
-      meta: { title: '用户管理', icon: 'dashboard' }
-    }]
-  },
-  {
-    path: '/',
-    component: Layout,
-    redirect: '/dashboard',
-    children: [{
-      path: 'distributechecker',
-      name: '审稿分配',
-      component: () => import('@/views/distributechecker/index'),
-      meta: { title: '审稿分配', icon: 'dashboard' }
-    }]
-  },
-  {
-    path: '/',
-    component: Layout,
-    redirect: '/notemanage',
-    children: [{
-      path: 'notemanage',
-      name: '稿件管理',
-      component: () => import('@/views/notemanage/index'),
-      meta: { title: '稿件管理', icon: 'dashboard' }
-    }]
-  },
-  {
     path: '/',
     component: Layout,
     redirect: '/notecheck',
@@ -101,18 +63,70 @@ export const constantRoutes = [
       component: () => import('@/views/notecheck/index'),
       meta: { title: '审核稿件', icon: 'dashboard' }
     }]
-  },
-  {
-    path: '/',
-    component: Layout,
-    redirect: '/dashboard',
-    children: [{
-      path: 'dataexport',
-      name: '数据归档',
-      component: () => import('@/views/dataexport/index'),
-      meta: { title: '数据归档', icon: 'dashboard' }
-    }]
   }
+  // {
+  //   path: '',
+  //   // component: Layout,
+  //   redirect: '/initpage'
+  // },
+  // {
+  //   path: '/',
+  //   component: Layout,
+  //   redirect: '/dashboard',
+  //   children: [
+  //     {
+  //       path: 'initpage',
+  //       name: '控制面板',
+  //       component: () => import('@/views/initpage/dashboard/admin/index'),
+  //       meta: { title: '控制面板', icon: 'dashboard' }
+  //     }
+  //   ]
+  // },
+  // {
+  //   path: '/',
+  //   component: Layout,
+  //   redirect: '/dashboard',
+  //   children: [{
+  //     path: 'usermanage',
+  //     name: '用户管理',
+  //     component: () => import('@/views/usermanage/index'),
+  //     meta: { title: '用户管理', icon: 'dashboard' }
+  //   }]
+  // },
+  // {
+  //   path: '/',
+  //   component: Layout,
+  //   redirect: '/dashboard',
+  //   children: [{
+  //     path: 'distributechecker',
+  //     name: '审稿分配',
+  //     component: () => import('@/views/distributechecker/index'),
+  //     meta: { title: '审稿分配', icon: 'dashboard' }
+  //   }]
+  // },
+  // {
+  //   path: '/',
+  //   component: Layout,
+  //   redirect: '/notemanage',
+  //   children: [{
+  //     path: 'notemanage',
+  //     name: '稿件管理',
+  //     component: () => import('@/views/notemanage/index'),
+  //     meta: { title: '稿件管理', icon: 'dashboard' }
+  //   }]
+  // },
+
+  // {
+  //   path: '/',
+  //   component: Layout,
+  //   redirect: '/dashboard',
+  //   children: [{
+  //     path: 'dataexport',
+  //     name: '数据归档',
+  //     component: () => import('@/views/dataexport/index'),
+  //     meta: { title: '数据归档', icon: 'dashboard' }
+  //   }]
+  // }
   // {
   //   path: '/',
   //   component: Layout,
