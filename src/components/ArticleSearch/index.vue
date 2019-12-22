@@ -21,7 +21,7 @@
       </el-col>
       <el-col span="4">
         <el-button type="primary" @click="searchClicked">检索</el-button>
-        <el-button type="primary" @click="$emit('exportEvent')">导出</el-button>
+        <el-button v-if="showExport" type="primary" @click="$emit('exportEvent')">导出</el-button>
       </el-col>
       <el-col span="4" />
     </el-row>
@@ -31,6 +31,7 @@
 var dateFormat = require('dateformat')
 export default {
   name: 'ArticleSearch',
+  props: ['showExport'],
   data: function() {
     return {
       header: '',

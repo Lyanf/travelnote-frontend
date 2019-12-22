@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <ArticleSearch @searchEvent="filter" @exportEvent="exportClicked" />
+    <ArticleSearch show-export="true" @searchEvent="filter" @exportEvent="exportClicked" />
     <div style="margin-top: 20px">
       <el-table v-loading="listLoading" :data="list" border fit highlight-current-row style="width: 100%">
         <el-table-column align="center" label="选择" width="200">
