@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-table v-loading="listLoading" :data="list" border fit highlight-current-row style="width: 100%">
+    <el-table v-loading="false" :data="list" border fit highlight-current-row style="width: 100%">
       <el-table-column align="center" label="游记ID" width="200">
         <template slot-scope="{row}">
           <span>{{ row.id }}</span>
@@ -114,6 +114,7 @@ export default {
           'header': row.header,
           'content': row.content,
           'date': row.date,
+          'name': row.name,
           'status': 1,
           'userid': row.userid
         }).then(response => {

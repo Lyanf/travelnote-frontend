@@ -5,7 +5,7 @@
       <el-table v-loading="listLoading" :data="list" border fit highlight-current-row style="width: 100%">
         <el-table-column align="center" label="稿件ID" width="200">
           <template slot-scope="{row}">
-<!--            <span>{{ row.id }}</span>-->
+            <!--            <span>{{ row.id }}</span>-->
             <span style="cursor: pointer; text-decoration: underline; color: #20a0ff" @click="showNote(row.id)">{{ row.id }}</span>
           </template>
         </el-table-column>
@@ -169,6 +169,7 @@ export default {
         'header': row.header,
         'content': row.content,
         'date': row.date,
+        'name': row.name,
         'status': 4,
         'userid': row.userid
       })

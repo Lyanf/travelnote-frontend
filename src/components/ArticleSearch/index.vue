@@ -54,12 +54,13 @@ export default {
         }
       }
       if (obj.hasOwnProperty('date')) {
-        const date1 = dateFormat(t['date'][0], 'yyyy,mm,dd')
-        const date2 = dateFormat(t['date'][1], 'yyyy,mm,dd')
+        const date1 = dateFormat(t['date'][0], 'yyyy.m.d')
+        const date2 = dateFormat(t['date'][1], 'yyyy.m.d')
         // t['date'] = [1, 2]
         obj['date'][0] = date1
         obj['date'][1] = date2
       }
+      console.log(obj)
       this.$emit('searchEvent', obj)
     }
   }
