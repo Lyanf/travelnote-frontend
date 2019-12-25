@@ -132,12 +132,13 @@ export default {
         'id': row.id,
         'articleid': row.articleid,
         'checkerid': row.checkerid,
-        'content': row.content,
+        'content': row.checkerinput,
         'complete': 1
       })
       let article = await fetchArticle(row.articleid)
       article = article['data']
       article.status = 2
+      console.log(article)
       await changeArticleStatus(article.id, article)
       this.$message({
         message: '文章已经通过',
